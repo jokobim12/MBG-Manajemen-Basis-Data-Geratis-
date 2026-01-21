@@ -38,46 +38,31 @@ Dibuat untuk fun aja. Iseng-iseng sekalian menambah project dari yang sebelumnya
 
 ## Instalasi
 
-### Linux / macOS
+### Linux / macOS (Satu Perintah)
 
 ```bash
-# Clone atau download repository
-git clone https://github.com/username/mbg.git
-cd mbg
+curl -sSL https://raw.githubusercontent.com/jokobim12/MBG-Manajemen-Basis-data-geratis-/main/remote-install.sh | sudo bash
+```
 
-# Jalankan installer
-chmod +x install.sh
-./install.sh
+Setelah itu, jalankan `mbg` dari terminal manapun.
 
-# Sekarang bisa dijalankan dari mana saja
-mbg
+### Uninstall
+
+```bash
+sudo rm -rf /opt/mbg /usr/local/bin/mbg
 ```
 
 ### Windows
 
+Untuk Windows, download file-file berikut dan jalankan dengan Python:
+
+- `mbg.py`
+- `translator.py`
+- `db.py`
+- `bantuan.py`
+
 ```powershell
-# Pastikan Python 3 sudah terinstall
-# Download repository, lalu:
-cd mbg
 python mbg.py
-```
-
-### Manual (Semua OS)
-
-```bash
-# Pastikan Python 3.6+ terinstall
-python3 --version
-
-# Clone/download repository
-git clone https://github.com/username/mbg.git
-cd mbg
-
-# Jalankan langsung
-python3 mbg.py
-
-# Atau (Linux/macOS)
-chmod +x mbg
-./mbg
 ```
 
 ## Cara Pakai
