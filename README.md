@@ -52,18 +52,15 @@ Setelah itu, jalankan `mbg` dari terminal manapun.
 sudo rm -rf /opt/mbg /usr/local/bin/mbg
 ```
 
-### Windows
+### Windows (Satu Perintah)
 
-Untuk Windows, download file-file berikut dan jalankan dengan Python:
-
-- `mbg.py`
-- `translator.py`
-- `db.py`
-- `bantuan.py`
+Buka PowerShell, lalu jalankan:
 
 ```powershell
-python mbg.py
+irm https://raw.githubusercontent.com/jokobim12/MBG-Manajemen-Basis-Data-Geratis-/main/install.ps1 | iex
 ```
+
+Setelah itu, buka terminal baru dan ketik `mbg`.
 
 ## Cara Pakai
 
