@@ -133,7 +133,7 @@ class MBGDatabase:
             
             # === SHOW TABLES ===
             if sql_upper.startswith("SHOW TABLES"):
-                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name;")
                 tables = [row[0] for row in cursor.fetchall()]
                 if tables:
                     self._tampilkan_daftar(f"Bahan di {self.current_db}", tables)
@@ -151,15 +151,41 @@ class MBGDatabase:
                     print(f"{Warna.MERAH}❌ Bahan \"{table_name}\" tidak ditemukan!{Warna.RESET}")
                     return
                 
-                # Format output
-                print(f"\n{Warna.CYAN}Struktur bahan: {table_name}{Warna.RESET}")
-                print("-" * 50)
+                # Format sebagai tabel
+                # Header: Kolom, Tipe, Wajib, Kunci
+                rows = []
                 for col in columns:
                     # col = (cid, name, type, notnull, default, pk)
-                    pk = " 🔑 UTAMA" if col[5] else ""
-                    nn = " WAJIB" if col[3] else ""
-                    print(f"  {col[1]}: {col[2]}{pk}{nn}")
-                print()
+                    nama = col[1]
+                    tipe = col[2]
+                    wajib = "Ya" if col[3] else "Tidak"
+                    kunci = "UTAMA" if col[5] else ""
+                    rows.append((nama, tipe, wajib, kunci))
+                
+                # Hitung lebar kolom
+                headers = ["Kolom", "Tipe", "Wajib", "Kunci"]
+                widths = [len(h) for h in headers]
+                for row in rows:
+                    for i, cell in enumerate(row):
+                        widths[i] = max(widths[i], len(str(cell)))
+                
+                # Tampilkan tabel
+                separator = "+" + "+".join("-" * (w + 2) for w in widths) + "+"
+                print(f"{Warna.CYAN}{separator}{Warna.RESET}")
+                
+                header_row = "|"
+                for i, h in enumerate(headers):
+                    header_row += f" {Warna.BOLD}{h:<{widths[i]}}{Warna.RESET} |"
+                print(header_row)
+                print(f"{Warna.CYAN}{separator}{Warna.RESET}")
+                
+                for row in rows:
+                    row_str = "|"
+                    for i, cell in enumerate(row):
+                        row_str += f" {str(cell):<{widths[i]}} |"
+                    print(row_str)
+                
+                print(f"{Warna.CYAN}{separator}{Warna.RESET}")
                 return
             
             # === CREATE TABLE - perlu konversi syntax ===
