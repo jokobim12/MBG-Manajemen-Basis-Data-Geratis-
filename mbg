@@ -1,0 +1,27 @@
+#!/bin/bash
+# MBG (Manajemen Basis Geratis) - Launcher Script
+# Sistem database mandiri dengan bahasa Indonesia
+# Jalankan dengan: ./mbg
+
+# Dapatkan direktori script
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR"
+
+# Cek apakah venv ada
+if [ -d "venv" ]; then
+    source venv/bin/activate
+    python mbg.py "$@"
+    deactivate 2>/dev/null
+else
+    # Fallback: cek Python sistem
+    if command -v python3 &> /dev/null; then
+        PYTHON=python3
+    elif command -v python &> /dev/null; then
+        PYTHON=python
+    else
+        echo "❌ Python tidak ditemukan! Silakan install Python 3."
+        exit 1
+    fi
+    
+    $PYTHON mbg.py "$@"
+fi
